@@ -7,6 +7,9 @@
 *.dll
 *.so
 *.dylib
+number-guessing-game
+REQUIREMENTS.md
+
 
 # Test binary, built with `go test -c`
 *.test
