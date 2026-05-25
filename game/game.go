@@ -41,6 +41,7 @@ type LevelConfig struct {
 
 func NewGame(difficulty LevelDifficulty) Game {
 	config := GetLevelConfig(difficulty)
+
 	game := Game{
 		TargetNumber: rand.Intn(100),
 		Attempts:     0,
@@ -61,7 +62,6 @@ func GetLevelConfig(level LevelDifficulty) LevelConfig {
 		return LevelConfig{MaxAttempts: 3}
 	default:
 		return LevelConfig{}
-
 	}
 }
 
@@ -74,14 +74,14 @@ func StartGame(scanner *bufio.Scanner) {
 
 	fmt.Printf("\n")
 
-	fmt.Println("Please select the difficulty level: ")
+	fmt.Println("Please select a difficulty level:")
 	fmt.Println("1. Easy   (10 chances)")
 	fmt.Println("2. Medium (5 chances)")
 	fmt.Println("3. Hard   (3 chances)")
 
 	for {
 
-		fmt.Print("Enter Your choice: ")
+		fmt.Printf("\nEnter your choice: ")
 
 		input, exit := readInput(scanner)
 
@@ -92,24 +92,26 @@ func StartGame(scanner *bufio.Scanner) {
 		num, err := strconv.Atoi(input)
 
 		if err != nil || num < 1 || num > 3 {
-			fmt.Println("Invalid choice, try again")
+			fmt.Println("Invalid choice. Please try again.")
 			continue
 		}
 
 		game = NewGame(LevelDifficulty(num))
 
-		fmt.Printf("\nGreat! You have selected the %s difficulty level.\n\n", game.Difficulty)
+		fmt.Printf("\nGreat! You selected the %s difficulty level.\n", game.Difficulty)
+		fmt.Printf("Let's start the game!\n\n")
+
 		break
 	}
 
 	for {
 
 		if game.Attempts >= game.MaxAttempts {
-			fmt.Printf("Game over! Angka yang benar adalah %d\n", game.TargetNumber)
+			fmt.Printf("Game over! The correct number was %d.\n", game.TargetNumber)
 			break
 		}
 
-		fmt.Printf("Attempts %d/%d - Masukan tebakan: ", game.Attempts+1, game.MaxAttempts)
+		fmt.Printf("Attempt %d/%d - Enter your guess: ", game.Attempts+1, game.MaxAttempts)
 
 		input, exit := readInput(scanner)
 
@@ -120,20 +122,19 @@ func StartGame(scanner *bufio.Scanner) {
 		guess, err := strconv.Atoi(input)
 
 		if err != nil {
-			fmt.Println("Masukan angka yang valid.")
+			fmt.Println("Please enter a valid number.")
 			continue
 		}
 
 		game.Attempts++
 
 		if guess < game.TargetNumber {
-			fmt.Println("Terlalu kecil!")
+			fmt.Printf("Incorrect! The number is greater than %d.\n\n", guess)
 		} else if guess > game.TargetNumber {
-			fmt.Println("Terlalu besar!")
+			fmt.Printf("Incorrect! The number is less than %d.\n\n", guess)
 		} else {
-			fmt.Printf("\nBenar! kamu menang dalam %d percobaan\n", game.Attempts)
+			fmt.Printf("\nCongratulations! You guessed the correct number in %d attempts.\n", game.Attempts)
 			break
 		}
-
 	}
 }
