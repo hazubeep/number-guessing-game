@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"os"
+
+	"github.com/hazubeep/number-guessing-game/game"
+)
 
 func main() {
-	fmt.Println("Hello world")
+
+	scanner := bufio.NewScanner(os.Stdin)
+
+	game.StartGame(scanner)
+
 }
