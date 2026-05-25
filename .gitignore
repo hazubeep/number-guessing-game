@@ -7,7 +7,7 @@
 *.dll
 *.so
 *.dylib
-number-guessing-game
+bin/
 REQUIREMENTS.md
 
 
