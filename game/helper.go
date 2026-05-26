@@ -7,10 +7,12 @@ import (
 
 func readInput(scanner *bufio.Scanner) (string, bool) {
 	if !scanner.Scan() {
-		return "", false
+		fmt.Println("\nGoodbye")
+		return "", true
 	}
 
 	text := scanner.Text()
+
 	if text == "exit" {
 		fmt.Println("Goodbye")
 		return "", true
